@@ -1,0 +1,4 @@
+com\example\usercenter\service\RedissonTest.class
+com\example\usercenter\service\AlgorithmUtilsTest.class
+com\example\usercenter\service\RedisTest.class
+com\example\usercenter\UserCenterApplicationTests.class
