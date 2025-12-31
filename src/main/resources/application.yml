@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: user-center
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/universe
+    username: root
+    password: 12345678
+  # session 失效时间（分钟）
+  session:
+    timeout: 86400
+    store-type: redis
+  # Redis 配置
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        domain: localhost
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值
+      logic-not-delete-value: 0 # 逻辑未删除值
+knife4j:
+  enable: false
+  openapi:
+    group:
+      default:
+        api-rule: package
+        api-rule-resources:
+          - com.example.yupao.controller
