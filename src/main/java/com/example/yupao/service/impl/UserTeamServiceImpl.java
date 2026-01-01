@@ -99,5 +99,4 @@ public class UserTeamServiceImpl extends ServiceImpl<UserTeamMapper, UserTeam>
                 teamVO.setMemberCount(teamIdToJoinCount.getOrDefault(teamVO.getId(), 0L).intValue())
         );
     }
-
 }
