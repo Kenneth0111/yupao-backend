@@ -1,6 +1,10 @@
 spring:
   application:
+<<<<<<< HEAD
     name: user-center
+=======
+    name: yupao
+>>>>>>> master
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,6 +15,7 @@ spring:
   session:
     timeout: 86400
     store-type: redis
+<<<<<<< HEAD
   # Redis配置
   redis:
     port: 6379
@@ -20,6 +25,18 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+=======
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  # Redis配置
+  data:
+    redis:
+      host: 58.87.96.8
+      port: 6379
+      password: 12345678
+      database: 0
+>>>>>>> master
 server:
   port: 8080
   servlet:
@@ -43,4 +60,8 @@ knife4j:
       default:
         api-rule: package
         api-rule-resources:
+<<<<<<< HEAD
           - com.example.usercenter.controller
+=======
+          - com.example.yupao.controller
+>>>>>>> master

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 -- auto-generated definition
 create table user_team
 (
     id         bigint auto_increment comment 'id' primary key,
+=======
+create table user_team
+(
+    id         bigint auto_increment comment 'id'
+        primary key,
+>>>>>>> master
     userId     bigint                             not null comment '用户id',
     teamId     bigint                             not null comment '队伍id',
     joinTime   datetime                           null comment '加入时间',

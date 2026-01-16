@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 -- auto-generated definition
 create table team
 (
     id          bigint auto_increment comment 'id' primary key,
+=======
+create table team
+(
+    id          bigint auto_increment comment 'id'
+        primary key,
+>>>>>>> master
     name        varchar(256)                       not null comment '队伍名称',
     description varchar(1024)                      null comment '队伍描述',
     maxNum      int      default 1                 not null comment '最大人数',
