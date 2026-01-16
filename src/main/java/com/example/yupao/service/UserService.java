@@ -75,7 +75,7 @@ public interface UserService extends IService<User> {
      * @param user 被修改用户
      * @param loginUser 当前登录用户
      */
-    int updateUser(User user, User loginUser);
+    Boolean updateUser(User user, User loginUser);
 
     /**
      * 根据标签搜索用户

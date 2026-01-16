@@ -27,4 +27,19 @@ public interface UserTeamService extends IService<UserTeam> {
      */
     void fillMemberCount(List<TeamVO> teamVOList);
 
+    /**
+     * 获取用户已加入的有效队伍数量（不含已退出/逻辑删除的）
+     */
+    int getJoinedTeamNum(Long userId);
+
+    /**
+     * 获取队伍当前有效成员数量（不含已退出/逻辑删除的）
+     */
+    int getTeamMemberCount(Long teamId);
+
+    /**
+     * 获取除队长外第2早加入队伍的用户id
+     */
+    long findEarliestMemberExcludingLeader(Long teamId, Long excludeUserId);
+
 }

@@ -4,6 +4,9 @@ import com.example.yupao.model.domain.Team;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.yupao.model.domain.User;
 import com.example.yupao.model.dto.TeamQuery;
+import com.example.yupao.model.request.TeamJoinRequest;
+import com.example.yupao.model.request.TeamQuitRequest;
+import com.example.yupao.model.request.TeamUpdateRequest;
 import com.example.yupao.model.vo.TeamVO;
 
 import java.util.List;
@@ -27,7 +30,56 @@ public interface TeamService extends IService<Team> {
     /**
      * 查询队伍
      * @param teamQuery 队伍查询
-     * @return
+     * @return TeamVoList
      */
     List<TeamVO> listTeams(TeamQuery teamQuery);
+
+    /**
+     * 解散队伍
+     * @param id 队伍id
+     * @param loginUser 登录用户
+     * return true
+     */
+    boolean dismissTeam(Long id, User loginUser);
+
+    /**
+     * 更新队伍
+     * @param teamUpdateRequest 队伍更新请求
+     * @param loginUser 登录用户
+     * @return true
+     */
+    boolean updateTeam(TeamUpdateRequest teamUpdateRequest, User loginUser);
+
+    /**
+     * 加入队伍
+     * @param teamJoinRequest 加入队伍请求
+     * @param loginUser 登录用户
+     * @return true
+     */
+    boolean joinTeam(TeamJoinRequest teamJoinRequest, User loginUser);
+
+    /**
+     * 退出队伍
+     * @param teamQuitRequest 退出队伍请求
+     * @param loginUser 登录用户
+     * @return true
+     */
+    boolean quitTeam(TeamQuitRequest teamQuitRequest, User loginUser);
+
+    /**
+     * 我创建的队伍
+     * @param teamQuery 队伍查询
+     * @param loginUser 登录用户
+     * @return TeamVoList
+     */
+    List<TeamVO> listTeamsMyCreated(TeamQuery teamQuery, User loginUser);
+
+    /**
+     * 我加入的队伍
+     * @param teamQuery 队伍查询
+     * @param loginUser 登录用户
+     * @return TeamVoList
+     */
+    List<TeamVO> listTeamsMyJoined(TeamQuery teamQuery, User loginUser);
+
 }

@@ -44,10 +44,6 @@ import static com.example.yupao.constant.UserConstant.USER_LOGIN_STATE;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
-    @Resource
-    private UserMapper userMapper;
-
-
     private static final String SALT = "yupi";
 
     @Resource
@@ -60,15 +56,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数错误");
         }
-        //  2. 账户不少于4位
+        //  2. 账户长度不少于4位
         if (userAccount.length() < 4) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号长度不足4位");
         }
-        //  3. 密码不少于8位
+        //  3. 密码长度不少于8位
         if (userPassword.length() < 8) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不足8位");
         }
-        //  4. 账号不含特殊字符
+        //  4. 账户不含特殊字符
         String illegalChars = "[-`~!@#$%^&*()+=|{}':;',\\[\\].<>/?！@#￥%……&*（）——+【】‘；：”“’。，、？\\s\\\\]";
         Pattern pattern = Pattern.compile(illegalChars);
         Matcher matcher = pattern.matcher(userAccount);
@@ -82,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         //  6. 账户不能重复
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
-        long count = userMapper.selectCount(queryWrapper);
+        long count = this.count(queryWrapper);
         if (count > 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号已存在");
         }
@@ -106,11 +102,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (userAccount.length() < 4) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号长度不足4位");
         }
-        // 密码长度不小于8位
+        // 密码长度不少于8位
         if (userPassword.length() < 8) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不足8位");
         }
-        // 账户不包含特殊字符
+        // 账户不含特殊字符
         String illegalChars = "[-`~!@#$%^&*()+=|{}':;',\\[\\].<>/?！@#￥%……&*（）——+【】‘；：”“’。，、？\\s\\\\]";
         Pattern pattern = Pattern.compile(illegalChars);
         Matcher matcher = pattern.matcher(userAccount);
@@ -122,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         queryWrapper.eq("userPassword", encryptPassword);
-        User user = userMapper.selectOne(queryWrapper);
+        User user = this.getOne(queryWrapper);
         if (user == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账户或密码错误");
         }
@@ -183,13 +179,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         if (userObj == null) {
-            throw new BusinessException(ErrorCode.NO_AUTH);
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         return (User) userObj;
     }
 
     @Override
-    public int updateUser(User user, User loginUser) {
+    public Boolean updateUser(User user, User loginUser) {
         if (user == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -200,11 +196,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (!isAdmin(loginUser) && !Objects.equals(user.getId(), loginUser.getId())) {
             throw new BusinessException(ErrorCode.NO_AUTH);
         }
-        User oldUser = userMapper.selectById(user.getId());
+        User oldUser = this.getById(user.getId());
         if (oldUser == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "被修改用户不存在或已删除");
         }
-        return userMapper.updateById(user);
+        return this.updateById(user);
     }
 
     @Override

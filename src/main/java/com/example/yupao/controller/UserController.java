@@ -13,16 +13,17 @@ import com.example.yupao.model.request.UserRegisterRequest;
 import com.example.yupao.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = { "http://localhost:5173" })
+@CrossOrigin(origins = {"http://localhost:5173"})
+@Slf4j
 public class UserController {
 
     @Resource
@@ -87,12 +88,12 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public BaseResponse<Integer> updateUser(@RequestBody User user, HttpServletRequest request) {
+    public BaseResponse<Boolean> updateUser(@RequestBody User user, HttpServletRequest request) {
         if (user == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         User loginUser = userService.getLoginUser(request);
-        int result = userService.updateUser(user, loginUser);
+        boolean result = userService.updateUser(user, loginUser);
         return ResultUtils.success(result);
     }
 
